@@ -79,6 +79,15 @@ public class BoxBall
         canvas.setForegroundColor(color);
         canvas.fillCircle(x, y, diameter);
     }
+    
+    /**
+     * Get the X position of the ball.
+     * 
+     * @return The X position.
+     */
+    public int getXPosition(){
+        return x;
+    }
 
     /**
      * Check if the color is too close to white.

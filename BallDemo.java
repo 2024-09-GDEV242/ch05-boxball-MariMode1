@@ -36,7 +36,10 @@ public class BallDemo
         
         // Draw the box
         myCanvas.setForegroundColor(Color.BLACK);
-        myCanvas.drawRectangle(boxX, boxY, boxWidth, boxHeight);
+        myCanvas.drawLine(boxX, boxY, boxX + boxWidth, boxY); // Top
+        myCanvas.drawLine(boxX, boxY, boxX, boxY + boxHeight); // Left
+        myCanvas.drawLine(boxX + boxWidth, boxY, boxX + boxWidth, boxY + boxHeight); // Right
+        myCanvas.drawLine(boxX, boxY + boxHeight, boxX + boxWidth, boxY + boxHeight); // Bottom
 
         // Create balls
         BoxBall[] balls = new BoxBall[numBalls];
@@ -48,11 +51,7 @@ public class BallDemo
         boolean finished =  false;
         while (!finished) {
             myCanvas.wait(50);           // small delay
-            myCanvas.clear();
-
-            // Redraw the box
-            myCanvas.setForegroundColor(Color.BLACK);
-            myCanvas.drawRectangle(boxX, boxY, boxWidth, boxHeight);
+            
 
             // Update and draw each ball
             for (BoxBall ball : balls) {
