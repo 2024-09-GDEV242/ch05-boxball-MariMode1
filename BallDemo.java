@@ -4,8 +4,8 @@ import java.awt.Color;
  * Class BallDemo - a short demonstration showing animation with the 
  * Canvas class. 
  *
- * @author Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author Mari Modebadze
+ * @version 2024.10.20
  */
 
 public class BallDemo   
@@ -21,34 +21,56 @@ public class BallDemo
     }
 
     /**
-     * Simulate two bouncing balls
+     * Simulate bouncing balls inside a box 
+     * 
+     * @param numballs created inside the box.
      */
-    public void bounce()
+    public void boxBounce(int numBalls)
     {
-        int ground = 400;   // position of the ground line
-
+        int boxX = 50; // x position of the box
+        int boxY = 50; // y position of the box
+        int boxWidth = 500; // width of the box
+        int boxHeight = 400; // height of the box
+        
         myCanvas.setVisible(true);
-
-        // draw the ground
+        
+        // Draw the box
         myCanvas.setForegroundColor(Color.BLACK);
-        myCanvas.drawLine(50, ground, 550, ground);
+        myCanvas.drawRectangle(boxX, boxY, boxWidth, boxHeight);
 
-        // create and show the balls
-        BouncingBall ball = new BouncingBall(50, 50, 16, Color.BLUE, ground, myCanvas);
-        ball.draw();
-        BouncingBall ball2 = new BouncingBall(70, 80, 20, Color.RED, ground, myCanvas);
-        ball2.draw();
+        // Create balls
+        BoxBall[] balls = new BoxBall[numBalls];
+        for (int i = 0; i < numBalls; i++) {
+            balls[i] = new BoxBall(boxWidth, boxHeight, 20);
+        }
 
         // make them bounce
         boolean finished =  false;
         while (!finished) {
             myCanvas.wait(50);           // small delay
-            ball.move();
-            ball2.move();
-            // stop once ball has travelled a certain distance on x axis
-            if(ball.getXPosition() >= 550 || ball2.getXPosition() >= 550) {
-                finished = true;
+            myCanvas.clear();
+
+            // Redraw the box
+            myCanvas.setForegroundColor(Color.BLACK);
+            myCanvas.drawRectangle(boxX, boxY, boxWidth, boxHeight);
+
+            // Update and draw each ball
+            for (BoxBall ball : balls) {
+                ball.update(boxWidth, boxHeight);
+                ball.draw(myCanvas);
             }
+
+            // Stopping condition
+            finished = (balls[0].getXPosition() >= boxWidth - 20); // Stop when the first ball reaches the right edge
         }
     }
+    
+    public static void main(String[] args) {
+        BallDemo demo = new BallDemo();
+        demo.boxBounce(10); // Create 10 balls
+    }
 }
+            
+        
+    
+
